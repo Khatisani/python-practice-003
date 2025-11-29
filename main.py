@@ -23,8 +23,8 @@ def weather_graph():
     your task is to read data from a file 'weather.txt' and draw the graphs accordingly.
     """
 
-    week_info = {}
-    weeks = []
+    weather_data = {}
+    weeks_info = []
 
 
     attributes = ["RAIN", "CLOUDS", "WIND", "SUN"]
@@ -39,22 +39,26 @@ def weather_graph():
     for line in lines:
         line = line.strip()
         if line == "---":
-            if week_info:
-                weeks.append(week_info)
-                week_info = {}
+            if weather_data:
+                weeks_info.append(weather_data)
+                weather_data = {}
             continue
         if ":" in line:
             day, percentage = line.split(":")
-            week_info[day.strip()] = int(percentage.strip())
-    if week_info:
-        weeks.append(week_info)
+            weather_data[day.strip()] = int(percentage.strip())
+    if weather_data:
+        weeks_info.append(weather_data)
 
-    for week_number, week in enumerate(weeks):
+    for week_number in range(len(weeks_info)):
+            week = weeks_info[week_number]
             attribute = attributes[week_number]
             symbol = symbols[week_number]
             print(f"\nWEEK {week_number + 1}: {attribute}")
             for day, percentage in week.items():
-                print (f"{day}: {symbol * (percentage // 10)}")
+                calculation = percentage // 10
+                conversion = symbol * calculation
+                print (f"{day}: {conversion}")
+
 
 
 weather_graph()
